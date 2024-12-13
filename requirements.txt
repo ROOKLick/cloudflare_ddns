@@ -1,0 +1,4 @@
+psutil==5.9.1
+requests==2.31.0
+tkinter==0.1.0
+pyinstaller==5.7.0
