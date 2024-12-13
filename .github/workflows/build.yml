@@ -36,4 +36,4 @@ jobs:
     - name: Upload .exe to Releases
       uses: ncipollo/release-action@v1
       with:
-        files: "dist/cloudflare_ddns.exe"  # 将打包后的 exe 文件上传到 Releases
+        files: "dist/cloudflare_ddns.exe"  # 将打包后的 exe 文件上传到 Releases 
