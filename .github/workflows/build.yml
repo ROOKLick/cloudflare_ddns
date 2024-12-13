@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - main  # 当代码推送到 main 分支时触发
-  pull_request:
-    branches:
-      - main  # 当代码在 main 分支创建 PR 时触发
 
 jobs:
   build:
@@ -33,7 +30,14 @@ jobs:
       run: |
         pyinstaller --onefile --noconsole cloudflare_ddns.py  # 用 PyInstaller 打包成 exe 文件
 
+    - name: Create Git tag for release
+      run: |
+        VERSION_TAG="v$(date +'%Y%m%d%H%M%S')"  # 使用当前时间戳作为版本号
+        git tag $VERSION_TAG
+        git push origin $VERSION_TAG
+
     - name: Upload .exe to Releases
       uses: ncipollo/release-action@v1
       with:
-        files: "dist/cloudflare_ddns.exe"  # 将打包后的 exe 文件上传到 Releases 
+        tag: ${{ steps.create_tag.outputs.VERSION_TAG }}  # 使用自动生成的标签
+        files: "dist/cloudflare_ddns.exe"  # 将打包后的 exe 文件上传到 Releases
