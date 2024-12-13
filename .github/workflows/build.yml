@@ -30,7 +30,7 @@ jobs:
 
     - name: Build the executable
       run: |
-        pyinstaller --onefile --noconsole your_program.py
+        pyinstaller --onefile --noconsole cloudflare_ddns.py
 
     - name: Create Git tag for release
       shell: pwsh
@@ -46,4 +46,4 @@ jobs:
       with:
         token: ${{ secrets.GITHUB_TOKEN }}  # 使用 GITHUB_TOKEN 上传到 Releases
         tag: ${{ steps.create_tag.outputs.VERSION_TAG }}
-        files: "dist/your_program.exe"
+        files: "dist/cloudflare_ddns.exe"
