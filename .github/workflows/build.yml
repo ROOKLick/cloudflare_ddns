@@ -28,7 +28,7 @@ jobs:
 
     - name: Build the executable
       run: |
-        pyinstaller --onefile --noconsole your_program.py  # 用 PyInstaller 打包成 exe 文件
+        pyinstaller --onefile --noconsole cloudflare_ddns.py  # 用 PyInstaller 打包成 exe 文件
 
     - name: Create Git tag for release
       shell: pwsh
@@ -41,4 +41,4 @@ jobs:
       uses: ncipollo/release-action@v1
       with:
         tag: ${{ steps.create_tag.outputs.VERSION_TAG }}  # 使用自动生成的标签
-        files: "dist/your_program.exe"  # 将打包后的 exe 文件上传到 Releases
+        files: "dist/cloudflare_ddns.exe"  # 将打包后的 exe 文件上传到 Releases
