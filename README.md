@@ -31,7 +31,7 @@ python cloudflare_ddns.py
 如果需要打包为 .exe 文件，可以使用 PyInstaller： If you need to build an .exe file, you can use PyInstaller:
 ```Python cmd
 pip install pyinstaller
-pyinstaller --onefile --noconsole cloudflare_ddns
+pyinstaller --onefile --noconsole cloudflare_ddns.py
 ```
 
 ________________________________________
