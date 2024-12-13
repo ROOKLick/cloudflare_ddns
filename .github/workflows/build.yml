@@ -8,15 +8,17 @@ on:
 jobs:
   build:
     runs-on: windows-latest  # 使用 Windows 环境构建 .exe 文件
-    
+
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}  # 使用自动生成的 GITHUB_TOKEN
 
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.9'  # 指定 Python 版本
+        python-version: '3.9'
 
     - name: Install dependencies
       run: |
@@ -28,21 +30,20 @@ jobs:
 
     - name: Build the executable
       run: |
-        pyinstaller --onefile --noconsole cloudflare_ddns.py  # 用 PyInstaller 打包成 exe 文件
+        pyinstaller --onefile --noconsole your_program.py
 
     - name: Create Git tag for release
       shell: pwsh
       run: |
-        $VERSION_TAG = "v" + (Get-Date -Format "yyyyMMddHHmmss")  # 使用 PowerShell 获取当前时间戳
+        $VERSION_TAG = "v" + (Get-Date -Format "yyyyMMddHHmmss")
         git config --global user.name "GitHub Actions"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
-        git remote set-url origin https://x-access-token:${{ secrets.GH_TOKEN }}@github.com/${{ github.repository }}.git
         git tag $VERSION_TAG
         git push origin $VERSION_TAG
 
     - name: Upload .exe to Releases
       uses: ncipollo/release-action@v1
       with:
-        tag: ${{ steps.create_tag.outputs.VERSION_TAG }}  # 使用自动生成的标签
-        files: "dist/cloudflare_ddns.exe"  # 将打包后的 exe 文件上传到 Releases
- 
+        token: ${{ secrets.GITHUB_TOKEN }}  # 使用 GITHUB_TOKEN 上传到 Releases
+        tag: ${{ steps.create_tag.outputs.VERSION_TAG }}
+        files: "dist/your_program.exe"
