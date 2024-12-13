@@ -45,3 +45,4 @@ jobs:
       with:
         tag: ${{ steps.create_tag.outputs.VERSION_TAG }}  # 使用自动生成的标签
         files: "dist/cloudflare_ddns.exe"  # 将打包后的 exe 文件上传到 Releases
+ 
